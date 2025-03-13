@@ -1,24 +1,22 @@
 package entities;
 
-import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class Reservation {
     private Integer roomNumber;
-    private Date ckeckIn;
-    private Date ckeckOut;
+    private Date checkIn;
+    private Date checkOut;
 
     private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-    public Reservation(){
-    }
+    public Reservation() {}
 
-    public Reservation(Integer roomNumber, Date ckeckIn, Date ckeckOut) {
+    public Reservation(Integer roomNumber, Date checkIn, Date checkOut) {
         this.roomNumber = roomNumber;
-        this.ckeckIn = ckeckIn;
-        this.ckeckOut = ckeckOut;
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
     }
 
     public Integer getRoomNumber() {
@@ -29,31 +27,29 @@ public class Reservation {
         this.roomNumber = roomNumber;
     }
 
-    public Date getCkeckIn() {
-        return ckeckIn;
+    public Date getCheckIn() {
+        return checkIn;
     }
 
-    public Date getCkeckOut() {
-        return ckeckOut;
+    public Date getCheckOut() {
+        return checkOut;
     }
 
     public long duration() {
-        long fiff = ckeckOut.getTime() - ckeckIn.getTime();
-        TimeUnit.DAYS.convert(fiff, TimeUnit.MILLISECONDS);
-        return fiff;
+        long diff = checkOut.getTime() - checkIn.getTime();
+        return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
     }
 
-    public void updateDates(Date ckeckIn, Date ckeckOut) {
-        this.ckeckIn = ckeckIn;
-        this.ckeckOut = ckeckOut;
+    public void updateDates(Date checkIn, Date checkOut) {
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
     }
 
     @Override
     public String toString() {
         return "Room number: " + roomNumber +
-                "\nCheck-in: " + sdf.format(ckeckIn) +
-                "\nCheck-out: " + sdf.format(ckeckOut) +
-                "," +
-                duration() + " nights";
+                "\nCheck-in: " + sdf.format(checkIn) +
+                "\nCheck-out: " + sdf.format(checkOut) +
+                "\nDuration: " + duration() + " nights";
     }
 }
