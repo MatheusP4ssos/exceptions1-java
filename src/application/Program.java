@@ -8,49 +8,45 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class Program {
+
     public static void main(String[] args) throws ParseException {
+
         Scanner sc = new Scanner(System.in);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
 
         System.out.println("Room Number: ");
         int roomNumber = sc.nextInt();
 
         System.out.println("Check-in date (dd/MM/yyyy)");
-        Date checkinDate = sdf.parse(sc.next());
+        Date checkIn = sdf.parse(sc.next());
 
         System.out.println("Check-out date (dd/MM/yyyy) ");
-        Date checkoutDate = sdf.parse(sc.next());
+        Date checkout = sdf.parse(sc.next());
 
-        if (!checkoutDate.after(checkinDate)) {
+        if (!checkout.after(checkIn)) {
             System.out.println("Error in reservation: Check-out date must be after check-in date ");
         } else {
 
-            Reservation reservation = new Reservation(roomNumber, checkinDate, checkoutDate);
+            Reservation reservation = new Reservation(roomNumber, checkIn, checkout);
             System.out.println("\nReservation details:");
             System.out.println(reservation);
 
             System.out.println();
             System.out.println("Enter data to update the reservation");
             System.out.println("Check-in date (dd/MM/yyyy) ");
-            checkinDate = sdf.parse(sc.next());
+            checkIn = sdf.parse(sc.next());
 
             System.out.println("Check-out date (dd/MM/yyyy) ");
-            checkoutDate = sdf.parse(sc.next());
+            checkout = sdf.parse(sc.next());
 
-            Date now = new Date();
-            if (checkinDate.before(now) || checkoutDate.after(now)) {
-                System.out.println("Error in reservation: Reservation dates for update must be future dates ");
-            } else if (!checkoutDate.after(checkinDate)) {
-                System.out.println("Error in reservation: Check-out date must be after check-in date ");
+            String error = reservation.updateDates(checkIn, checkout);
+            if (error != null) {
+                System.out.println("Error in reservation: " + error);
             } else {
-                reservation.updateDates(checkinDate, checkoutDate);
-
-                System.out.println("\nReservation details:");
-                System.out.println(reservation);
+                System.out.println("Reservation: " + reservation);
+                System.out.println();
             }
         }
-
-            sc.next();
-        }
+        sc.close();
     }
+}
